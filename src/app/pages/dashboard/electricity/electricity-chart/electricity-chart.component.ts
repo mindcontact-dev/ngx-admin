@@ -2,7 +2,7 @@ import { delay, takeWhile } from 'rxjs/operators';
 import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { LayoutService } from '../../../../@core/utils';
-import { ElectricityChart } from '../../../../@core/data/electricity.service';
+import { ElectricityChart } from '../../../../@core/data/electricity';
 
 @Component({
   selector: 'ngx-electricity-chart',
@@ -10,6 +10,7 @@ import { ElectricityChart } from '../../../../@core/data/electricity.service';
   template: `
     <div echarts
          [options]="option"
+         [merge]="option"
          class="echart"
          (chartInit)="onChartInit($event)">
     </div>
@@ -26,7 +27,7 @@ export class ElectricityChartComponent implements AfterViewInit, OnDestroy {
 
   constructor(private theme: NbThemeService,
               private layoutService: LayoutService) {
-    this.layoutService.onChangeLayoutSize()
+    this.layoutService.onSafeChangeLayoutSize()
       .pipe(
         takeWhile(() => this.alive),
       )
@@ -66,7 +67,7 @@ export class ElectricityChartComponent implements AfterViewInit, OnDestroy {
             position: 'top',
             backgroundColor: eTheme.tooltipBg,
             borderColor: eTheme.tooltipBorderColor,
-            borderWidth: 3,
+            borderWidth: 1,
             formatter: '{c0} kWh',
             extraCssText: eTheme.tooltipExtraCss,
           },

@@ -24,7 +24,7 @@ export class StatsAreaChartComponent implements AfterViewInit, OnDestroy {
 
   constructor(private theme: NbThemeService,
               private layoutService: LayoutService) {
-    this.layoutService.onChangeLayoutSize()
+    this.layoutService.onSafeChangeLayoutSize()
       .pipe(
         takeWhile(() => this.alive),
       )
@@ -66,8 +66,7 @@ export class StatsAreaChartComponent implements AfterViewInit, OnDestroy {
             splitLine: {
               show: true,
               lineStyle: {
-                color: trafficTheme.colorBlack,
-                opacity: 0.06,
+                color: trafficTheme.yAxisSplitLine,
                 width: '1',
               },
             },
@@ -84,7 +83,7 @@ export class StatsAreaChartComponent implements AfterViewInit, OnDestroy {
             position: 'top',
             backgroundColor: trafficTheme.tooltipBg,
             borderColor: trafficTheme.tooltipBorderColor,
-            borderWidth: 3,
+            borderWidth: 1,
             formatter: '$ {c0}',
             extraCssText: trafficTheme.tooltipExtraCss,
           },
